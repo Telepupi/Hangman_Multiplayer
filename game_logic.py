@@ -8,10 +8,11 @@ class GameLogic:
 
 
     def guess_letter(self, letter) -> int:
-        self.used_letters.add(letter)
+
         if letter in self.used_letters:
             self.attemps -= 1
             return 1 # Было
+        self.used_letters.add(letter)
         if letter in self.word:
             self.guesses.add(letter)
             return 2 # верно
