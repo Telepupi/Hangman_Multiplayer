@@ -1,12 +1,12 @@
 import json
 import socket
 import game_logic
+import configparser
 
 class Server:
-
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    def __init__(self, host : str = "0.0.0.0", port : int= 8080):
+    def __init__(self, host : str = "0.0.0.0", port = 8080):
         self.host = host
         self.port = port
         self.server_socket.bind((self.host, self.port))
@@ -80,7 +80,13 @@ class Server:
             self.send_data(conn1, {"msg": "Вы победили"})
             self.send_data(conn2, {"msg": "Загадывающий победил"})
 
-srv = Server("0.0.0.0", 13372)
+config = configparser.ConfigParser()
+config.read("config.ini")
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+HOST = config["server"]["HOST"].strip()
+PORT = int(config["server"]["PORT"])
+
+srv = Server(HOST, PORT)
 srv.game_loop()
 
 

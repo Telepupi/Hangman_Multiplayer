@@ -1,7 +1,10 @@
 import json
 import socket
+import configparser
 
-HOST, PORT = "26.79.83.131", 13372
+config = configparser.ConfigParser()
+config.read("config.ini")
+HOST, PORT = config["client"]["HOST"], config["server"]["PORT"]
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect((HOST, PORT))
 
